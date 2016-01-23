@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Learning Web Audio</title>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="bower_components/bootswatch/cosmo/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="css/main.css" type="text/css" />
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <h1>Just Playing...</h1>
+        </div>
+        <div class="row">
+            <div class="pallette">
+                <canvas id="palletteCanvas" height="100px">
+                    This text is displayed if your browser does not support HTML5 Canvas.
+                </canvas>
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="nodeTargets">
+                <div class="pallette">
+                    <canvas id="nodeTargetCanvas" height="200px">
+                        This text is displayed if your browser does not support HTML5 Canvas.
+                    </canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="dropdown clearfix" id="contextDropDown">
+        <ul class="dropdown-menu">
+            <li><a id="useAsSourceAction">Use as source</a></li>
+            <li><a id="useAsDestinationAction">Use as destination</a></li>
+            <li><a id="markAsAudioSourceAction">Use as audio source</a></li>
+            <li><a id="markAsAudioDestinationAction">Use as audio destination</a></li>
+        </ul>
+    </div>
+
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="js/AudioLibrary.js"></script>
+    <script src="js/Graph.js"></script>
+    <script src="js/Canvas.js"></script>
+    <script src="js/App.js"></script>
+</body>
+
+</html>

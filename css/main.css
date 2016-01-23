@@ -1,0 +1,15 @@
+html {
+    padding: 0;
+    margin: 0;
+}
+
+.open-dropdown {
+  position: absolute;
+  display: block;
+}
+
+.open-dropdown .dropdown-menu {
+    display: block;
+    position: static;
+    margin-bottom: 5px;
+}
