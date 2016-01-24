@@ -26,17 +26,22 @@ module Canvas {
 
     }
 
-    export module Types {        
+    export module Types {
+
+        import AudioHelper = AudioLibrary.AudioHelper;
+        import AudioNodeCreator = AudioLibrary.AudioNodeCreator;
+
         export interface NodeToCreateChangeListener {
             (node: WebAudioNode): void;
         }
 
-        // this references broken as fuck - shitfuck fucking shit
         export class Pallette {
             private _canvas: HTMLCanvasElement;
             private _canvasContext: CanvasRenderingContext2D;
-            
+
             private _nodeToCreateChangeListener: NodeToCreateChangeListener;
+            
+            private _audioNodeCreator: AudioNodeCreator;
 
             public elements: NameToWebAudioNodeMap = {};
 
@@ -67,13 +72,16 @@ module Canvas {
                     }
                 }
 
+                let helper: AudioHelper = AudioHelper.getInstance();
+                this._audioNodeCreator = new AudioNodeCreator(helper.retrieveAudioContext());
+
                 this.init();
             }
 
             private init() {
                 this.elements = {
-                    testNode: new WebAudioNode(10, 10, 50, 50, "black", "black", null),
-                    otherTestNode: new WebAudioNode(70, 10, 50, 50, "blue", "blue", null)
+                    fileSourceNode: new WebAudioNode(10, 10, 50, 50, "black", "black", this._audioNodeCreator.createSoundNodeFromFileURL("snares2.mp3", 1)),
+                    destinationNode: new WebAudioNode(70, 10, 50, 50, "blue", "blue", this._audioNodeCreator.createDestinationNode())
                 };
             }
 
@@ -114,7 +122,7 @@ module Canvas {
             public resizeToWindowWidth() {
                 this._canvas.width = window.innerWidth;
             }
-            
+
             public setNodeToCreateChangeListener(listener: NodeToCreateChangeListener) {
                 this._nodeToCreateChangeListener = listener;
             }

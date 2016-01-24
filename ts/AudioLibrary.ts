@@ -92,8 +92,8 @@ module AudioLibrary {
             this._node = node;
         }
 
-        connect(destinationNode: AudioNode) {
-            this._node.connect(destinationNode);
+        connect(destinationNode: AudioComponent) {
+            this._node.connect(destinationNode._node);
         }
 
         disconnect() {
@@ -103,7 +103,7 @@ module AudioLibrary {
 
     class AudioDestinationComponent extends AudioComponent {
 
-        connect(destinationNode: AudioNode) {
+        connect(destinationNode: AudioComponent) {
             console.log("Destination Node should not do that...");
         }
         
@@ -133,8 +133,8 @@ module AudioLibrary {
             getSound.send();
         }
 
-        createSoundNodeFromFileURL(audioContext: AudioContext, fileUrl: string, playbackRate: number, volumeVal: number): AudioComponent {
-            var playSound = audioContext.createBufferSource();
+        createSoundNodeFromFileURL(fileUrl: string, playbackRate: number): AudioComponent {
+            var playSound = this._audioContext.createBufferSource();
             playSound.loop = true;
             playSound.playbackRate.value = playbackRate;
 
@@ -142,7 +142,7 @@ module AudioLibrary {
                 playSound.buffer = buffer;
             });
 
-            playSound.start(audioContext.currentTime);
+            playSound.start(this._audioContext.currentTime);
 
             return new AudioComponent(playSound);
         }
@@ -181,7 +181,7 @@ module AudioLibrary {
         }
 
         // kinda breaking LSP here - if I have time to refactor I might want to change this
-        createDestinationNOde(): AudioComponent {
+        createDestinationNode(): AudioComponent {
             return new AudioDestinationComponent(this._audioContext.destination);
         }
     }

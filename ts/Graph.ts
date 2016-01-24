@@ -3,6 +3,8 @@
 module Graph {
 
     export module Types {
+        
+        import AudioComponent = AudioLibrary.AudioComponent;
 
         export class WebAudioNode {
             
@@ -12,16 +14,16 @@ module Graph {
             private _sizeY: number;
             private _fillStyle: string;
             private _strokeStyle: string;
-            private _audioComponent;
+            private _audioComponent: AudioComponent;
 
-            constructor(posX: number, posY: number, sizeX: number, sizeY: number, fillStyle: string, strokeStyle: string, audioStuff) {
+            constructor(posX: number, posY: number, sizeX: number, sizeY: number, fillStyle: string, strokeStyle: string, audioComponent: AudioComponent) {
                 this._posX = posX;
                 this._posY = posY;
                 this._sizeX = sizeX;
                 this._sizeY = sizeY;
                 this._fillStyle = fillStyle;
                 this._strokeStyle = strokeStyle;
-                this._audioComponent = audioStuff;
+                this._audioComponent = audioComponent;
             }
 
             public get posX(): number {
@@ -71,6 +73,10 @@ module Graph {
             public set strokeStyle(value: string) {
                 this._strokeStyle = value;
             }
+            
+            public get audioComponent(): AudioComponent {
+                return this._audioComponent;
+            }
 
             public isInHitbox(posOnCanvas: { x: number, y: number }): boolean {
                 if (posOnCanvas.x < this._posX || posOnCanvas.x > (this._posX + this._sizeX)
@@ -79,6 +85,10 @@ module Graph {
                 } else {
                     return true;
                 }
+            }
+            
+            public connectAudioNode(destinationAudioNode: WebAudioNode) {
+                this._audioComponent.connect(destinationAudioNode._audioComponent);
             }
         }
 
@@ -105,6 +115,9 @@ module Graph {
 
             public set destination(value: WebAudioNode) {
                 this._destination = value;
+                if (this._source) {
+                    this._source.connectAudioNode(this._destination);
+                }
             }
 
             drawVisualConnection(canvasContext: CanvasRenderingContext2D) {

@@ -52,7 +52,7 @@ var AudioLibrary;
             this._node = node;
         }
         connect(destinationNode) {
-            this._node.connect(destinationNode);
+            this._node.connect(destinationNode._node);
         }
         disconnect() {
             this._node.disconnect();
@@ -82,14 +82,14 @@ var AudioLibrary;
             };
             getSound.send();
         }
-        createSoundNodeFromFileURL(audioContext, fileUrl, playbackRate, volumeVal) {
-            var playSound = audioContext.createBufferSource();
+        createSoundNodeFromFileURL(fileUrl, playbackRate) {
+            var playSound = this._audioContext.createBufferSource();
             playSound.loop = true;
             playSound.playbackRate.value = playbackRate;
             this.requestDecodedSoundFile(fileUrl, (buffer) => {
                 playSound.buffer = buffer;
             });
-            playSound.start(audioContext.currentTime);
+            playSound.start(this._audioContext.currentTime);
             return new AudioComponent(playSound);
         }
         retrieveUserMicStream(callback) {
@@ -115,7 +115,7 @@ var AudioLibrary;
             return liveStreamNode;
         }
         // kinda breaking LSP here - if I have time to refactor I might want to change this
-        createDestinationNOde() {
+        createDestinationNode() {
             return new AudioDestinationComponent(this._audioContext.destination);
         }
     }

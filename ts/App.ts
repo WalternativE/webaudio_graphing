@@ -8,8 +8,6 @@ module WebAudioProject {
     import Edge = Graph.Types.Edge;
     import WebAudioNode = Graph.Types.WebAudioNode;
     import NodeToCreateChangeListener = Canvas.Types.NodeToCreateChangeListener;
-    import AudioHelper = AudioLibrary.AudioHelper;
-    import AudioNodeCreator = AudioLibrary.AudioNodeCreator;
 
     class App {
 
@@ -67,14 +65,6 @@ module WebAudioProject {
                     this._connectionToEstablish = null;
                 }
             };
-
-            // markAsAudioSourceAction.click = function () {
-            //     connectionGraph.audioSource = node;
-            // };
-
-            // markAsAudioDestinationAction.click = function () {
-            //     connectionGraph.audioDestination = node;
-            // };
         }
 
         drawNodes() {
@@ -102,7 +92,8 @@ module WebAudioProject {
             this._nodeTargetCanvas.onmouseup = (evt: MouseEvent) => {
                 if (this._nodeToCreate != null) {
                     var mousePos = Helper.getMousePos(this._nodeTargetCanvas, evt);
-                    this._graph.addNode(new WebAudioNode(mousePos.x, mousePos.y, this._nodeToCreate.sizeX, this._nodeToCreate.sizeY, this._nodeToCreate.fillStyle, this._nodeToCreate.strokeStyle, null));
+                    this._graph.addNode(new WebAudioNode(mousePos.x, mousePos.y, this._nodeToCreate.sizeX, this._nodeToCreate.sizeY, this._nodeToCreate.fillStyle,
+                                        this._nodeToCreate.strokeStyle, this._nodeToCreate.audioComponent));
                     this._nodeToCreate = null;
                     this._pallette.reset();
                 }
@@ -140,10 +131,4 @@ module WebAudioProject {
 
     var app: App = new App();
     app.main();
-    
-    // var player: AudioNodeCreator = new AudioNodeCreator();
-    // var helper: AudioHelper = AudioHelper.getInstance();
-    // var audioContext = helper.retrieveAudioContext();
-    // // player.playSoundFile(audioContext, "snares2.mp3", 1, 1);
-    // player.playLiveStreamn(audioContext);
 }

@@ -4,14 +4,14 @@ var Graph;
     var Types;
     (function (Types) {
         class WebAudioNode {
-            constructor(posX, posY, sizeX, sizeY, fillStyle, strokeStyle, audioStuff) {
+            constructor(posX, posY, sizeX, sizeY, fillStyle, strokeStyle, audioComponent) {
                 this._posX = posX;
                 this._posY = posY;
                 this._sizeX = sizeX;
                 this._sizeY = sizeY;
                 this._fillStyle = fillStyle;
                 this._strokeStyle = strokeStyle;
-                this._audioComponent = audioStuff;
+                this._audioComponent = audioComponent;
             }
             get posX() {
                 return this._posX;
@@ -49,6 +49,9 @@ var Graph;
             set strokeStyle(value) {
                 this._strokeStyle = value;
             }
+            get audioComponent() {
+                return this._audioComponent;
+            }
             isInHitbox(posOnCanvas) {
                 if (posOnCanvas.x < this._posX || posOnCanvas.x > (this._posX + this._sizeX)
                     || posOnCanvas.y < this._posY || posOnCanvas.y > (this._posY + this._sizeY)) {
@@ -57,6 +60,9 @@ var Graph;
                 else {
                     return true;
                 }
+            }
+            connectAudioNode(destinationAudioNode) {
+                this._audioComponent.connect(destinationAudioNode._audioComponent);
             }
         }
         Types.WebAudioNode = WebAudioNode;
@@ -76,6 +82,9 @@ var Graph;
             }
             set destination(value) {
                 this._destination = value;
+                if (this._source) {
+                    this._source.connectAudioNode(this._destination);
+                }
             }
             drawVisualConnection(canvasContext) {
                 canvasContext.beginPath();

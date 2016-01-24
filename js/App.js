@@ -43,12 +43,6 @@ var WebAudioProject;
                     this._connectionToEstablish = null;
                 }
             };
-            // markAsAudioSourceAction.click = function () {
-            //     connectionGraph.audioSource = node;
-            // };
-            // markAsAudioDestinationAction.click = function () {
-            //     connectionGraph.audioDestination = node;
-            // };
         }
         drawNodes() {
             this._nodeTargetCanvasContext.clearRect(0, 0, this._nodeTargetCanvas.width, this._nodeTargetCanvas.height);
@@ -70,7 +64,7 @@ var WebAudioProject;
             this._nodeTargetCanvas.onmouseup = (evt) => {
                 if (this._nodeToCreate != null) {
                     var mousePos = Helper.getMousePos(this._nodeTargetCanvas, evt);
-                    this._graph.addNode(new WebAudioNode(mousePos.x, mousePos.y, this._nodeToCreate.sizeX, this._nodeToCreate.sizeY, this._nodeToCreate.fillStyle, this._nodeToCreate.strokeStyle, null));
+                    this._graph.addNode(new WebAudioNode(mousePos.x, mousePos.y, this._nodeToCreate.sizeX, this._nodeToCreate.sizeY, this._nodeToCreate.fillStyle, this._nodeToCreate.strokeStyle, this._nodeToCreate.audioComponent));
                     this._nodeToCreate = null;
                     this._pallette.reset();
                 }

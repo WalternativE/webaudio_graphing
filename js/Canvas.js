@@ -19,7 +19,8 @@ var Canvas;
     Canvas.Helper = Helper;
     var Types;
     (function (Types) {
-        // this references broken as fuck - shitfuck fucking shit
+        var AudioHelper = AudioLibrary.AudioHelper;
+        var AudioNodeCreator = AudioLibrary.AudioNodeCreator;
         class Pallette {
             constructor(canvasID) {
                 this.elements = {};
@@ -43,12 +44,14 @@ var Canvas;
                         this._nodeToCreateChangeListener(null);
                     }
                 };
+                let helper = AudioHelper.getInstance();
+                this._audioNodeCreator = new AudioNodeCreator(helper.retrieveAudioContext());
                 this.init();
             }
             init() {
                 this.elements = {
-                    testNode: new WebAudioNode(10, 10, 50, 50, "black", "black", null),
-                    otherTestNode: new WebAudioNode(70, 10, 50, 50, "blue", "blue", null)
+                    fileSourceNode: new WebAudioNode(10, 10, 50, 50, "black", "black", this._audioNodeCreator.createSoundNodeFromFileURL("snares2.mp3", 1)),
+                    destinationNode: new WebAudioNode(70, 10, 50, 50, "blue", "blue", this._audioNodeCreator.createDestinationNode())
                 };
             }
             draw() {
