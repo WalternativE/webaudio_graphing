@@ -4,5 +4,10 @@
         "target": "es6",
         "rootDir": "ts/",
         "outDir": "js/"
-    }
+    },
+    "exclude": [
+        "node_modules",
+        "bower_components",
+        "typings"
+    ]
 }

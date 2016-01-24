@@ -4,8 +4,8 @@ var ts = require('gulp-typescript');
 
 var tsproject = ts.createProject('tsconfig.json');
 
-gulp.task('webserver', function () {
-    return connect.server();
+gulp.task('connect', function () {
+    connect.server();
 });
 
 gulp.task('typescript', function () {
@@ -19,4 +19,4 @@ gulp.task('watch', ['typescript'], function () {
     return gulp.watch('ts/*.ts', ['typescript']);
 });
 
-gulp.task('default', ['webserver', 'watch']);
+gulp.task('default', ['connect', 'watch']);

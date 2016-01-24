@@ -5,14 +5,14 @@ module Graph {
     export module Types {
 
         export class WebAudioNode {
-
+            
             private _posX: number;
             private _posY: number;
             private _sizeX: number;
             private _sizeY: number;
             private _fillStyle: string;
             private _strokeStyle: string;
-            private _audioStuff;
+            private _audioComponent;
 
             constructor(posX: number, posY: number, sizeX: number, sizeY: number, fillStyle: string, strokeStyle: string, audioStuff) {
                 this._posX = posX;
@@ -21,7 +21,7 @@ module Graph {
                 this._sizeY = sizeY;
                 this._fillStyle = fillStyle;
                 this._strokeStyle = strokeStyle;
-                this._audioStuff = audioStuff;
+                this._audioComponent = audioStuff;
             }
 
             public get posX(): number {

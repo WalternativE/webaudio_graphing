@@ -11,7 +11,7 @@ var Graph;
                 this._sizeY = sizeY;
                 this._fillStyle = fillStyle;
                 this._strokeStyle = strokeStyle;
-                this._audioStuff = audioStuff;
+                this._audioComponent = audioStuff;
             }
             get posX() {
                 return this._posX;

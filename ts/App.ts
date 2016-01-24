@@ -8,6 +8,8 @@ module WebAudioProject {
     import Edge = Graph.Types.Edge;
     import WebAudioNode = Graph.Types.WebAudioNode;
     import NodeToCreateChangeListener = Canvas.Types.NodeToCreateChangeListener;
+    import AudioHelper = AudioLibrary.AudioHelper;
+    import AudioPlayer = AudioLibrary.AudioPlayer;
 
     class App {
 
@@ -39,6 +41,7 @@ module WebAudioProject {
         }
 
         initContextOptions(node: WebAudioNode) {
+            
             var useAsSourceAction = document.getElementById("useAsSourceAction");
             var useAsDestinationAction = document.getElementById("useAsDestinationAction");
             // var markAsAudioSourceAction = document.getElementById("markAsAudioSourceAction");
@@ -137,4 +140,9 @@ module WebAudioProject {
 
     var app: App = new App();
     app.main();
+    
+    var player: AudioPlayer = new AudioPlayer();
+    var helper: AudioHelper = AudioHelper.getInstance();
+    var audioContext = helper.retrieveAudioContext();
+    player.playSoundFile(audioContext, "snares2.mp3", 1, 1);
 }

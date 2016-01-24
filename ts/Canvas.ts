@@ -26,8 +26,7 @@ module Canvas {
 
     }
 
-    export module Types {
-        
+    export module Types {        
         export interface NodeToCreateChangeListener {
             (node: WebAudioNode): void;
         }
