@@ -11,17 +11,10 @@ npm install
 bower install
 ```
 
-I do not have configured gulp yet to watch and compile TypeScript files. I am using Visual Studio Code
-to compile the .ts files - if you don't have a setup just execute the following commands (make sure to be
-in the root directory for compiling the .ts files).
-
-```
-npm install -g typescript
-tsc -p .
-```
-
 For serving a local light weight web server instance listening on localhost:8080 use the following command
-in the project root directory (wherever the gulpfile.js is).
+in the project root directory (wherever the gulpfile.js is). Most recently I came around to configure
+gulp to also watch and compile typescript files. As typescript pretty much is a superset of javascript
+please make your changes in the .ts files - they compile to javascript which is otherwise overitten.
 
 ```
 gulp
