@@ -47,50 +47,77 @@ var AudioLibrary;
     }
     AudioHelper._audioHelper = new AudioHelper();
     AudioLibrary.AudioHelper = AudioHelper;
-    class AudioPlayer {
-        requestDecodedSoundFile(fileURL, audioContext, callback) {
+    class AudioComponent {
+        constructor(node) {
+            this._node = node;
+        }
+        connect(destinationNode) {
+            this._node.connect(destinationNode);
+        }
+        disconnect() {
+            this._node.disconnect();
+        }
+    }
+    AudioLibrary.AudioComponent = AudioComponent;
+    class AudioDestinationComponent extends AudioComponent {
+        connect(destinationNode) {
+            console.log("Destination Node should not do that...");
+        }
+        disconnect() {
+            console.log("Nothing to disconnet from");
+        }
+    }
+    class AudioNodeCreator {
+        constructor(audioContext) {
+            this._audioContext = audioContext;
+        }
+        requestDecodedSoundFile(fileURL, callback) {
             var getSound = new XMLHttpRequest();
             getSound.open("GET", fileURL, true);
             getSound.responseType = "arraybuffer";
             getSound.onload = () => {
-                audioContext.decodeAudioData(getSound.response, (buffer) => {
+                this._audioContext.decodeAudioData(getSound.response, (buffer) => {
                     callback(buffer);
                 });
             };
             getSound.send();
         }
-        playSoundFile(audioContext, fileUrl, playbackRate, volumeVal) {
-            var volume = audioContext.createGain();
-            volume.gain.value = volumeVal;
+        createSoundNodeFromFileURL(audioContext, fileUrl, playbackRate, volumeVal) {
             var playSound = audioContext.createBufferSource();
             playSound.loop = true;
             playSound.playbackRate.value = playbackRate;
-            this.requestDecodedSoundFile(fileUrl, audioContext, (buffer) => {
+            this.requestDecodedSoundFile(fileUrl, (buffer) => {
                 playSound.buffer = buffer;
             });
-            playSound.connect(volume);
-            volume.connect(audioContext.destination);
             playSound.start(audioContext.currentTime);
+            return new AudioComponent(playSound);
         }
-        // explicit any here because type information is missing
-        playLiveStreamn(audioContext) {
+        retrieveUserMicStream(callback) {
             var helper = AudioHelper.getInstance();
             if (helper.navigator) {
                 console.log("getUserMedia supported");
                 helper.navigator.getUserMedia({
                     audio: true,
                     video: false
-                }, function (stream) {
-                    let liveStream = audioContext.createMediaStreamSource(stream);
-                    console.log("Live stream running");
-                    // let convolver = audioContext.createConvolver();
-                    // convolver.buffer = impulseBuffer;
-                    liveStream.connect(audioContext.destination);
-                }, function (err) {
+                }, (stream) => {
+                    let audioContRef = this._audioContext;
+                    callback(audioContRef.createMediaStreamSource(stream));
+                }, (err) => {
                     console.log("Error occured: " + err);
                 });
             }
         }
+        createSoundNodeFromLiveStreamn() {
+            var liveStreamNode;
+            this.retrieveUserMicStream((stream) => {
+                liveStreamNode = new AudioComponent(stream);
+            });
+            return liveStreamNode;
+        }
+        // kinda breaking LSP here - if I have time to refactor I might want to change this
+        createDestinationNOde() {
+            return new AudioDestinationComponent(this._audioContext.destination);
+        }
     }
-    AudioLibrary.AudioPlayer = AudioPlayer;
+    AudioLibrary.AudioNodeCreator = AudioNodeCreator;
 })(AudioLibrary || (AudioLibrary = {}));

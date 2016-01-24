@@ -9,7 +9,7 @@ module WebAudioProject {
     import WebAudioNode = Graph.Types.WebAudioNode;
     import NodeToCreateChangeListener = Canvas.Types.NodeToCreateChangeListener;
     import AudioHelper = AudioLibrary.AudioHelper;
-    import AudioPlayer = AudioLibrary.AudioPlayer;
+    import AudioNodeCreator = AudioLibrary.AudioNodeCreator;
 
     class App {
 
@@ -141,8 +141,9 @@ module WebAudioProject {
     var app: App = new App();
     app.main();
     
-    var player: AudioPlayer = new AudioPlayer();
-    var helper: AudioHelper = AudioHelper.getInstance();
-    var audioContext = helper.retrieveAudioContext();
-    player.playSoundFile(audioContext, "snares2.mp3", 1, 1);
+    // var player: AudioNodeCreator = new AudioNodeCreator();
+    // var helper: AudioHelper = AudioHelper.getInstance();
+    // var audioContext = helper.retrieveAudioContext();
+    // // player.playSoundFile(audioContext, "snares2.mp3", 1, 1);
+    // player.playLiveStreamn(audioContext);
 }

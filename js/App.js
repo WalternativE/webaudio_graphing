@@ -6,8 +6,6 @@ var WebAudioProject;
     var Helper = Canvas.Helper;
     var Edge = Graph.Types.Edge;
     var WebAudioNode = Graph.Types.WebAudioNode;
-    var AudioHelper = AudioLibrary.AudioHelper;
-    var AudioPlayer = AudioLibrary.AudioPlayer;
     class App {
         constructor() {
             this._nodeTargetCanvas = document.getElementById("nodeTargetCanvas");
@@ -102,8 +100,4 @@ var WebAudioProject;
     }
     var app = new App();
     app.main();
-    var player = new AudioPlayer();
-    var helper = AudioHelper.getInstance();
-    var audioContext = helper.retrieveAudioContext();
-    player.playSoundFile(audioContext, "snares2.mp3", 1, 1);
 })(WebAudioProject || (WebAudioProject = {}));
