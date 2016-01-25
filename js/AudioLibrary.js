@@ -132,6 +132,13 @@ var AudioLibrary;
                 return new AudioComponent(userMiceStream);
             });
         }
+        createConvolverNode(impulseFileURL) {
+            var convolver = this._audioContext.createConvolver();
+            this.requestDecodedSoundFile(impulseFileURL, (buffer) => {
+                convolver.buffer = buffer;
+            });
+            return new AudioComponent(convolver);
+        }
         createGainNode(gainVal) {
             var gainNode = this._audioContext.createGain();
             gainNode.gain.value = gainVal;

@@ -181,6 +181,14 @@ module AudioLibrary {
             var userMiceStream = await this.retrieveUserMicStream();
             return new AudioComponent(userMiceStream);
         }
+        
+        createConvolverNode(impulseFileURL: string): AudioComponent {
+            var convolver = this._audioContext.createConvolver();
+            this.requestDecodedSoundFile(impulseFileURL, (buffer) => {
+                convolver.buffer = buffer;
+            })            
+            return new AudioComponent(convolver);
+        }
 
         createGainNode(gainVal: number): AudioComponent {
             var gainNode: GainNode = this._audioContext.createGain();
