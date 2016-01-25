@@ -78,10 +78,12 @@ module Canvas {
                 this.init();
             }
 
-            private init() {
+            private async init() {
                 this.elements = {
                     fileSourceNode: new WebAudioNode(10, 10, 50, 50, "black", "black", this._audioNodeCreator.createSoundNodeFromFileURL("snares2.mp3", 1)),
-                    destinationNode: new WebAudioNode(70, 10, 50, 50, "blue", "blue", this._audioNodeCreator.createDestinationNode())
+                    miceInputSourceNode: new WebAudioNode(70, 10, 50, 50, "green", "green", await this._audioNodeCreator.createSoundNodeFromLiveStreamn()),
+                    halfGainNode: new WebAudioNode(130, 10, 50, 50, "red", "red", this._audioNodeCreator.createGainNode(0.1)),
+                    destinationNode: new WebAudioNode(190, 10, 50, 50, "blue", "blue", this._audioNodeCreator.createDestinationNode())
                 };
             }
 

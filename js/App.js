@@ -21,8 +21,6 @@ var WebAudioProject;
         initContextOptions(node) {
             var useAsSourceAction = document.getElementById("useAsSourceAction");
             var useAsDestinationAction = document.getElementById("useAsDestinationAction");
-            // var markAsAudioSourceAction = document.getElementById("markAsAudioSourceAction");
-            // var markAsAudioDestinationAction = document.getElementById("markAsAudioDestinationAction");
             useAsSourceAction.onclick = () => {
                 if (this._connectionToEstablish == null) {
                     this._connectionToEstablish = new Edge(node, null);

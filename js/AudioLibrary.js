@@ -1,4 +1,17 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, Promise, generator) {
+    return new Promise(function (resolve, reject) {
+        generator = generator.call(thisArg, _arguments);
+        function cast(value) { return value instanceof Promise && value.constructor === Promise ? value : new Promise(function (resolve) { resolve(value); }); }
+        function onfulfill(value) { try { step("next", value); } catch (e) { reject(e); } }
+        function onreject(value) { try { step("throw", value); } catch (e) { reject(e); } }
+        function step(verb, value) {
+            var result = generator[verb](value);
+            result.done ? resolve(result.value) : cast(result.value).then(onfulfill, onreject);
+        }
+        step("next", void 0);
+    });
+};
 var AudioLibrary;
 (function (AudioLibrary) {
     class AudioHelper {
@@ -92,27 +105,37 @@ var AudioLibrary;
             playSound.start(this._audioContext.currentTime);
             return new AudioComponent(playSound);
         }
-        retrieveUserMicStream(callback) {
-            var helper = AudioHelper.getInstance();
-            if (helper.navigator) {
-                console.log("getUserMedia supported");
-                helper.navigator.getUserMedia({
-                    audio: true,
-                    video: false
-                }, (stream) => {
-                    let audioContRef = this._audioContext;
-                    callback(audioContRef.createMediaStreamSource(stream));
-                }, (err) => {
-                    console.log("Error occured: " + err);
-                });
-            }
+        retrieveUserMicStream() {
+            return __awaiter(this, void 0, Promise, function* () {
+                var helper = AudioHelper.getInstance();
+                if (helper.navigator) {
+                    console.log("getUserMedia supported");
+                    var promise = new Promise((resolve, reject) => {
+                        helper.navigator.getUserMedia({
+                            audio: true,
+                            video: false
+                        }, (stream) => {
+                            var audioContRef = this._audioContext;
+                            var mediaStreamSource = audioContRef.createMediaStreamSource(stream);
+                            resolve(mediaStreamSource);
+                        }, (err) => {
+                            console.log("Error occured: " + err);
+                        });
+                    });
+                    return promise;
+                }
+            });
         }
         createSoundNodeFromLiveStreamn() {
-            var liveStreamNode;
-            this.retrieveUserMicStream((stream) => {
-                liveStreamNode = new AudioComponent(stream);
+            return __awaiter(this, void 0, Promise, function* () {
+                var userMiceStream = yield this.retrieveUserMicStream();
+                return new AudioComponent(userMiceStream);
             });
-            return liveStreamNode;
+        }
+        createGainNode(gainVal) {
+            var gainNode = this._audioContext.createGain();
+            gainNode.gain.value = gainVal;
+            return new AudioComponent(gainNode);
         }
         // kinda breaking LSP here - if I have time to refactor I might want to change this
         createDestinationNode() {

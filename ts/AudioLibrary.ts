@@ -106,7 +106,7 @@ module AudioLibrary {
         connect(destinationNode: AudioComponent) {
             console.log("Destination Node should not do that...");
         }
-        
+
         disconnect() {
             console.log("Nothing to disconnet from");
         }
@@ -147,37 +147,47 @@ module AudioLibrary {
             return new AudioComponent(playSound);
         }
 
-        private retrieveUserMicStream(callback: (stream) => void) {
+        private async retrieveUserMicStream() {
             var helper: AudioHelper = AudioHelper.getInstance();
             if (helper.navigator) {
                 console.log("getUserMedia supported");
 
-                helper.navigator.getUserMedia(
-                    {
-                        audio: true,
-                        video: false
-                    },
+                var promise: Promise<any> = new Promise<any>(
+                    (resolve, reject) => {
+                        helper.navigator.getUserMedia(
+                            {
+                                audio: true,
+                                video: false
+                            },
 
-                    (stream) => {
-                        let audioContRef: any = this._audioContext;
-                        callback(audioContRef.createMediaStreamSource(stream));
-                    },
+                            (stream) => {
+                                var audioContRef: any = this._audioContext;
+                                var mediaStreamSource = audioContRef.createMediaStreamSource(stream);
+                                resolve(mediaStreamSource);
+                            },
 
-                    (err) => {
-                        console.log("Error occured: " + err);
+                            (err) => {
+                                console.log("Error occured: " + err);
+                            }
+                        );
                     }
                 );
+
+                return promise;
             }
         }
 
-        createSoundNodeFromLiveStreamn(): AudioComponent {
-            var liveStreamNode: AudioComponent;
+        async createSoundNodeFromLiveStreamn() {
+            var userMiceStream = await this.retrieveUserMicStream();
+            return new AudioComponent(userMiceStream);
+        }
 
-            this.retrieveUserMicStream((stream) => {
-                liveStreamNode = new AudioComponent(stream);
-            });
+        createGainNode(gainVal: number): AudioComponent {
+            var gainNode: GainNode = this._audioContext.createGain();
 
-            return liveStreamNode;
+            gainNode.gain.value = gainVal;
+
+            return new AudioComponent(gainNode);
         }
 
         // kinda breaking LSP here - if I have time to refactor I might want to change this

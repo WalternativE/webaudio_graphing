@@ -10,7 +10,6 @@ module WebAudioProject {
     import NodeToCreateChangeListener = Canvas.Types.NodeToCreateChangeListener;
 
     class App {
-
         private _nodeTargetCanvas: HTMLCanvasElement;
         private _nodeTargetCanvasContext: CanvasRenderingContext2D;
 
@@ -42,8 +41,6 @@ module WebAudioProject {
             
             var useAsSourceAction = document.getElementById("useAsSourceAction");
             var useAsDestinationAction = document.getElementById("useAsDestinationAction");
-            // var markAsAudioSourceAction = document.getElementById("markAsAudioSourceAction");
-            // var markAsAudioDestinationAction = document.getElementById("markAsAudioDestinationAction");
 
             useAsSourceAction.onclick = () => {
                 if (this._connectionToEstablish == null) {

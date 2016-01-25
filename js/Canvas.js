@@ -1,4 +1,17 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, Promise, generator) {
+    return new Promise(function (resolve, reject) {
+        generator = generator.call(thisArg, _arguments);
+        function cast(value) { return value instanceof Promise && value.constructor === Promise ? value : new Promise(function (resolve) { resolve(value); }); }
+        function onfulfill(value) { try { step("next", value); } catch (e) { reject(e); } }
+        function onreject(value) { try { step("throw", value); } catch (e) { reject(e); } }
+        function step(verb, value) {
+            var result = generator[verb](value);
+            result.done ? resolve(result.value) : cast(result.value).then(onfulfill, onreject);
+        }
+        step("next", void 0);
+    });
+};
 var Canvas;
 (function (Canvas) {
     var WebAudioNode = Graph.Types.WebAudioNode;
@@ -49,10 +62,14 @@ var Canvas;
                 this.init();
             }
             init() {
-                this.elements = {
-                    fileSourceNode: new WebAudioNode(10, 10, 50, 50, "black", "black", this._audioNodeCreator.createSoundNodeFromFileURL("snares2.mp3", 1)),
-                    destinationNode: new WebAudioNode(70, 10, 50, 50, "blue", "blue", this._audioNodeCreator.createDestinationNode())
-                };
+                return __awaiter(this, void 0, Promise, function* () {
+                    this.elements = {
+                        fileSourceNode: new WebAudioNode(10, 10, 50, 50, "black", "black", this._audioNodeCreator.createSoundNodeFromFileURL("snares2.mp3", 1)),
+                        miceInputSourceNode: new WebAudioNode(70, 10, 50, 50, "green", "green", yield this._audioNodeCreator.createSoundNodeFromLiveStreamn()),
+                        halfGainNode: new WebAudioNode(130, 10, 50, 50, "red", "red", this._audioNodeCreator.createGainNode(0.1)),
+                        destinationNode: new WebAudioNode(190, 10, 50, 50, "blue", "blue", this._audioNodeCreator.createDestinationNode())
+                    };
+                });
             }
             draw() {
                 this._canvasContext.clearRect(0, 0, this._canvas.width, this._canvas.height);
