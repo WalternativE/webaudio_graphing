@@ -189,6 +189,24 @@ module AudioLibrary {
             })            
             return new AudioComponent(convolver);
         }
+        
+        createLowPassNode(frequency: number, gain: number) {
+            var lowpass = this._audioContext.createBiquadFilter();
+            lowpass.type = "lowpass";
+            lowpass.frequency.value = frequency;
+            lowpass.gain.value = gain;
+            
+            return new AudioComponent(lowpass);
+        }
+        
+        createHighPassNode(frequency: number, gain: number) {
+            var highpass = this._audioContext.createBiquadFilter();
+            highpass.type = "highpass";
+            highpass.frequency.value = frequency;
+            highpass.gain.value = gain;
+            
+            return new AudioComponent(highpass);
+        }
 
         createGainNode(gainVal: number): AudioComponent {
             var gainNode: GainNode = this._audioContext.createGain();

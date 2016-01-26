@@ -64,11 +64,13 @@ var Canvas;
             init() {
                 return __awaiter(this, void 0, Promise, function* () {
                     this.elements = {
-                        fileSourceNode: new WebAudioNode(10, 10, 50, 50, "black", "black", this._audioNodeCreator.createSoundNodeFromFileURL("snares2.mp3", 1)),
+                        fileSourceNode: new WebAudioNode(10, 10, 50, 50, "black", "black", this._audioNodeCreator.createSoundNodeFromFileURL("finnish_metal.mp3", 1)),
                         miceInputSourceNode: new WebAudioNode(70, 10, 50, 50, "green", "green", yield this._audioNodeCreator.createSoundNodeFromLiveStreamn()),
-                        gainNode: new WebAudioNode(130, 10, 50, 50, "red", "red", this._audioNodeCreator.createGainNode(0.1)),
+                        gainNode: new WebAudioNode(130, 10, 50, 50, "red", "red", this._audioNodeCreator.createGainNode(1)),
                         convolverNode: new WebAudioNode(190, 10, 50, 50, "pink", "pink", this._audioNodeCreator.createConvolverNode("irs_pipe_carpet.wav")),
-                        destinationNode: new WebAudioNode(250, 10, 50, 50, "blue", "blue", this._audioNodeCreator.createDestinationNode())
+                        lowPassNode: new WebAudioNode(250, 10, 50, 50, "brown", "brown", this._audioNodeCreator.createLowPassNode(500, 25)),
+                        highPassNOde: new WebAudioNode(310, 10, 50, 50, "orange", "orange", this._audioNodeCreator.createHighPassNode(1000, 25)),
+                        destinationNode: new WebAudioNode(370, 10, 50, 50, "blue", "blue", this._audioNodeCreator.createDestinationNode())
                     };
                 });
             }

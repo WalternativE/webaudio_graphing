@@ -139,6 +139,20 @@ var AudioLibrary;
             });
             return new AudioComponent(convolver);
         }
+        createLowPassNode(frequency, gain) {
+            var lowpass = this._audioContext.createBiquadFilter();
+            lowpass.type = "lowpass";
+            lowpass.frequency.value = frequency;
+            lowpass.gain.value = gain;
+            return new AudioComponent(lowpass);
+        }
+        createHighPassNode(frequency, gain) {
+            var highpass = this._audioContext.createBiquadFilter();
+            highpass.type = "highpass";
+            highpass.frequency.value = frequency;
+            highpass.gain.value = gain;
+            return new AudioComponent(highpass);
+        }
         createGainNode(gainVal) {
             var gainNode = this._audioContext.createGain();
             gainNode.gain.value = gainVal;
