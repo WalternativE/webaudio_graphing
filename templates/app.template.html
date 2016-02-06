@@ -1,0 +1,25 @@
+<div class="container-fluid">
+    <div class="row">
+        <h1>Just Playing...</h1>
+    </div>
+    <div class="row">
+        <pallette (newNode)="addEmittedNodeToGraph($event)"></pallette>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="nodeTargets">
+            <div class="pallette">
+                <canvas id="nodeTargetCanvas" height="200px">
+                    This text is displayed if your browser does not support HTML5 Canvas.
+                </canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="dropdown clearfix" id="contextDropDown">
+    <ul class="dropdown-menu">
+        <li><a id="useAsSourceAction">Use as source</a></li>
+        <li><a id="useAsDestinationAction">Use as destination</a></li>
+    </ul>
+</div>
