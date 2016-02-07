@@ -1,4 +1,3 @@
-<button class="btn btn-warning" (click)="fuckOneUp()">Fuck one up!</button>
 <div *ngIf="nodes">
     <div *ngFor="#node of nodes">
         <audio-node [node]="node"
@@ -8,5 +7,8 @@
             (dragstart)="handleDragStart($event, node)"
             (dragend)="handleDragEnd($event, node)"
             (connectionEstablishmentEvent)="handleConnectionEstablishmentRequest(node)"></audio-node>
+    </div>
+    <div *ngFor="#edge of edges">
+        <edge-component [edge]="edge"></edge-component>
     </div>
 </div>

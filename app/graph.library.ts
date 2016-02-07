@@ -32,7 +32,7 @@ export class Edge {
     private _source: WebAudioNode;
     private _destination: WebAudioNode;
 
-    constructor(source?: WebAudioNode, destination?: WebAudioNode) {
+    constructor(public edgeID:number, source?: WebAudioNode, destination?: WebAudioNode) {
         this._source = source;
         this._destination = destination;
     }
