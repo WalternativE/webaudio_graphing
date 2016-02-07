@@ -3,7 +3,7 @@ Component,
 Input
 } from 'angular2/core';
 import {AudioNodeComponent} from './audionode.component';
-import {WebAudioNode} from './graph.library';
+import {WebAudioNode, Edge} from './graph.library';
 
 @Component({
     selector: "switchboard",
@@ -14,6 +14,9 @@ import {WebAudioNode} from './graph.library';
 export class SwitchboardComponent {
 
     @Input() nodes: WebAudioNode[];
+    
+    edges: Edge[] = [];
+    edgeToCreate: Edge;
 
     fuckOneUp() {
         this.nodes.pop();
@@ -33,5 +36,18 @@ export class SwitchboardComponent {
         
         node.posX = component.posX;
         node.posY = component.posY;
+    }
+    
+    handleConnectionEstablishmentRequest(node: WebAudioNode) {
+        if(!this.edgeToCreate) {
+            this.edgeToCreate = new Edge(node);
+        } else {
+            this.edgeToCreate.destination = node;
+            
+            this.edges.push(this.edgeToCreate);
+            this.edgeToCreate = null;
+        }
+        
+        console.log(node);
     }
 }

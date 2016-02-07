@@ -6,14 +6,15 @@ import {AudioNode} from './audionode.component';
 
 @Component({
     selector: 'output-node',
-    templateUrl: 'templates/outputnode.template.html'
+    templateUrl: 'templates/outputnode.template.html',
+    styleUrls: ['css/connectorstyle.css']
 })
 export class OutputNodeComponent implements AudioNode {
     
     webAudioNode: WebAudioNode;
-    callback: () => void;
+    callback: (node: WebAudioNode) => void;
     
-    setComponentMetaWrapper(node: WebAudioNode) {
+    setNode(node: WebAudioNode) {
         this.webAudioNode = node;
     }
     

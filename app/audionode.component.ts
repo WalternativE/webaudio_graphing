@@ -11,8 +11,8 @@ EventEmitter
 import {WebAudioNode} from "./graph.library";
 
 export interface AudioNode {
-    setComponentMetaWrapper(webAudioNode: WebAudioNode);
-    setNodeClickedCallback(callback: () => void);
+    setNode(webAudioNode: WebAudioNode);
+    setNodeClickedCallback(callback: (webAudioNode: WebAudioNode) => void);
 }
 
 @Component({
@@ -21,19 +21,17 @@ export interface AudioNode {
 })
 export class AudioNodeComponent implements AfterViewInit {
     @Input() node: WebAudioNode;
-    @Output() edgeStarted = new EventEmitter();
+    @Output() connectionEstablishmentEvent = new EventEmitter<WebAudioNode>();
 
     constructor(private _dcl: DynamicComponentLoader, private _elementRef: ElementRef) { }
 
     loadComponent(component: WebAudioNode) {
         this._dcl.loadIntoLocation(component.type, this._elementRef, 'ank').then((compRef) => {
             var instance = <AudioNode>compRef.instance;
-            instance.setComponentMetaWrapper(this.node);
+            instance.setNode(this.node);
 
-            instance.setNodeClickedCallback(() => {
-                // DO SOMETHING!
-                console.log("LOOOOOOL");
-                this.edgeStarted.emit("");
+            instance.setNodeClickedCallback((webAudioNode) => {
+                this.connectionEstablishmentEvent.emit(webAudioNode);
             });
         });
     }

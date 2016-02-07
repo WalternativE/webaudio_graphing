@@ -30,8 +30,6 @@ export class AppComponent {
             $event.stopPropagation();
         }
         
-        console.log($event);
-        
         var component = <WebAudioNode>JSON.parse($event.dataTransfer.getData("application/json"));
         component.posX = $event.clientX;
         component.posY = $event.offsetY;

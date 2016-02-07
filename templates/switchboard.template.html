@@ -6,6 +6,7 @@
             class="audio-node"
             draggable="true"
             (dragstart)="handleDragStart($event, node)"
-            (dragend)="handleDragEnd($event, node)"></audio-node>
+            (dragend)="handleDragEnd($event, node)"
+            (connectionEstablishmentEvent)="handleConnectionEstablishmentRequest(node)"></audio-node>
     </div>
 </div>

@@ -13,10 +13,10 @@ import {AudioNode} from './audionode.component';
 export class InputNodeComponent implements AudioNode, OnDestroy{
     
     webAudioNode: WebAudioNode;
-    callback: () => void;    
+    callback: (node: WebAudioNode) => void;    
     
-    setComponentMetaWrapper(wrapper: WebAudioNode) {
-        this.webAudioNode = wrapper;
+    setNode(webAudioNode: WebAudioNode) {
+        this.webAudioNode = webAudioNode;
     }
     
     setNodeClickedCallback(callback) {
@@ -26,13 +26,5 @@ export class InputNodeComponent implements AudioNode, OnDestroy{
     ngOnDestroy() {
         // release node resources here
         console.log('Input Node destroyed!');
-    }
-    
-    changePos() {
-        console.log(this.webAudioNode)
-        this.webAudioNode.posX += 5;
-        this.webAudioNode.posY += 5;
-        console.log(this.webAudioNode);
-    }
-    
+    }    
 }
