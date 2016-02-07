@@ -1,0 +1,6 @@
+<button class="btn btn-warning" (click)="fuckOneUp()">Fuck one up!</button>
+<div *ngIf="nodes">
+    <div *ngFor="#node of nodes">
+        <audio-node [node]="node"></audio-node>
+    </div>
+</div>

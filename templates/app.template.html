@@ -6,15 +6,8 @@
         <pallette (newNode)="addEmittedNodeToGraph($event)"></pallette>
     </div>
     <hr />
-    <div class="row">
-        <div class="nodeTargets">
-            <div class="pallette">
-                <canvas id="nodeTargetCanvas" height="200px">
-                    This text is displayed if your browser does not support HTML5 Canvas.
-                </canvas>
-            </div>
-        </div>
-    </div>
+    
+    <switchboard [nodes]="nodes"></switchboard>
 </div>
 
 <div class="dropdown clearfix" id="contextDropDown">
