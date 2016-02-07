@@ -1,6 +1,5 @@
-html {
-    padding: 0;
-    margin: 0;
+html, body, #main-content, #switchboard-row {
+    height: 100%;
 }
 
 .open-dropdown {

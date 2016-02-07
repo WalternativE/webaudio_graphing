@@ -1,9 +1,7 @@
 import {
     Component
 } from 'angular2/core';
-
-import {AudioComponentMetaWrapper} from './app.component';
-
+import {WebAudioNode} from './graph.library';
 import {AudioNode} from './audionode.component';
 
 @Component({
@@ -12,11 +10,11 @@ import {AudioNode} from './audionode.component';
 })
 export class OutputNodeComponent implements AudioNode {
     
-    wrapper: AudioComponentMetaWrapper;
+    webAudioNode: WebAudioNode;
     callback: () => void;
     
-    setComponentMetaWrapper(wrapper: AudioComponentMetaWrapper) {
-        this.wrapper = wrapper;
+    setComponentMetaWrapper(node: WebAudioNode) {
+        this.webAudioNode = node;
     }
     
     setNodeClickedCallback(callback: () => void) {

@@ -1,134 +1,46 @@
 import {
-    Component,
-    AfterViewInit,
-    Type
+Component
 } from 'angular2/core';
 import {PalletteComponent} from './pallette.component';
 import {SwitchboardComponent} from './switchboard.component';
-import {AudioGraph, WebAudioNode, Edge} from './graph.library';
-import {AudioComponent} from './audioLibrary.library';
-import {Helper} from './canvas.component';
-
-export class AudioComponentMetaWrapper {
-    
-    constructor(private _type: Type, private _audioComponent: AudioComponent) {}
-    
-    getType() {
-        return this._type;
-    }
-}
+import {WebAudioNode} from './graph.library';
 
 @Component({
     selector: 'my-app',
     templateUrl: 'templates/app.template.html',
-    directives: [PalletteComponent, SwitchboardComponent]
+    directives: [PalletteComponent, SwitchboardComponent],
+    styleUrls: ['css/app.css']
 })
-export class AppComponent implements AfterViewInit {
+export class AppComponent {
 
-    // private _nodeTargetCanvas: HTMLCanvasElement;
-    // private _nodeTargetCanvasContext: CanvasRenderingContext2D;
+    nodes: WebAudioNode[] = [];
 
-    // private _connectionToEstablish: Edge;
-
-    // private _graph: AudioGraph;
-
-    // private _contextMenu: HTMLElement;
-    
-    nodes: AudioComponentMetaWrapper[] = [];
-    
-    addEmittedNodeToGraph(emittedNode: AudioComponentMetaWrapper) {
-        // this._graph.addNode(emittedNode);
+    addEmittedNodeToGraph(emittedNode: WebAudioNode) {
         this.nodes.push(emittedNode);
     }
-    
-    ngAfterViewInit() {
-        // this._nodeTargetCanvas = <HTMLCanvasElement>document.getElementById("nodeTargetCanvas");
-        // this._nodeTargetCanvasContext = this._nodeTargetCanvas.getContext("2d");
 
-        // this._nodeTargetCanvas.width = window.innerWidth;
-
-        // this._graph = new AudioGraph();
-
-        // this._contextMenu = document.getElementById("contextDropDown");
-        
-        // this.main();
+    handleDragOver($event) {
+        if ($event.preventDefault) {
+            $event.preventDefault(); // Necessary. Allows us to drop.
+        }
     }
 
-    // initContextOptions(node: WebAudioNode) {
-
-    //     var useAsSourceAction = document.getElementById("useAsSourceAction");
-    //     var useAsDestinationAction = document.getElementById("useAsDestinationAction");
-
-    //     useAsSourceAction.onclick = () => {
-    //         if (this._connectionToEstablish == null) {
-    //             this._connectionToEstablish = new Edge(node, null);
-    //         } else {
-    //             // TODO error handling!
-    //             console.log("There is already an establishing operation in progress!");
-    //         }
-    //     }
-
-    //     useAsDestinationAction.onclick = () => {
-    //         if (this._connectionToEstablish == null) {
-    //             // TODO error handling!
-    //             console.log("There is no defined source!");
-    //         } else {
-    //             this._connectionToEstablish.destination = node;
-    //             this._graph.addEdge(this._connectionToEstablish);
-
-    //             this._connectionToEstablish = null;
-    //         }
-    //     };
-    // }
-
-    // drawNodes() {
-    //     this._nodeTargetCanvasContext.clearRect(0, 0, this._nodeTargetCanvas.width, this._nodeTargetCanvas.height);
-    //     this._graph.drawGraph(this._nodeTargetCanvasContext);
-    // }
-
-    // main() {
-
-    //     window.onresize = () => {
-    //         this._nodeTargetCanvas.width = window.innerWidth;
-    //     };
-
-    //     this._nodeTargetCanvas.onmousedown = (evt: MouseEvent) => {
-    //         var retrievedGraphNode = this._graph.retrieveNodeForMousePosOrReturnNull(Helper.getMousePos(this._nodeTargetCanvas, evt));
-
-    //         if (retrievedGraphNode != null) {
-    //             this._nodeTargetCanvas.onmousemove = (event: MouseEvent) => {
-    //                 Helper.moveNode(this._nodeTargetCanvas, event, retrievedGraphNode);
-    //             };
-    //         }
-    //     };
-
-    //     this._nodeTargetCanvas.addEventListener("contextmenu", (evt: MouseEvent) => {
-    //         var retrievedGraphNode = this._graph.retrieveNodeForMousePosOrReturnNull(Helper.getMousePos(this._nodeTargetCanvas, evt));
-
-    //         if (retrievedGraphNode != null) {
-    //             this._contextMenu.classList.toggle("open-dropdown");
-    //             this._contextMenu.style.left = "" + evt.pageX + "px";
-    //             this._contextMenu.style.top = "" + evt.pageY + "px";
-
-    //             this.initContextOptions(retrievedGraphNode);
-
-    //             evt.preventDefault();
-    //         }
-    //     });
+    handleDrop($event: DragEvent, node: WebAudioNode) {
+        if($event.stopPropagation) {
+            $event.stopPropagation();
+        }
         
-    //     this._nodeTargetCanvas.onmouseup = (evt: MouseEvent) => {
-    //       this._nodeTargetCanvas.onmousemove = null;  
-    //     };
-
-    //     // Maybe I just want to have a cancel option...more explicit
-    //     document.addEventListener("click", () => {
-    //         if (this._contextMenu.classList.contains("open-dropdown")) {
-    //             this._contextMenu.classList.toggle("open-dropdown");
-    //         }
-    //     });
-
-    //     setInterval(() => {
-    //         this.drawNodes();
-    //     }, 10);
-    // }
+        console.log($event);
+        
+        var component = <WebAudioNode>JSON.parse($event.dataTransfer.getData("application/json"));
+        component.posX = $event.clientX;
+        component.posY = $event.offsetY;
+        
+         // If you want to know why I resorted to this hack
+        // http://stackoverflow.com/questions/11927309/html5-dnd-datatransfer-setdata-or-getdata-not-working-in-every-browser-except-fi
+        var componentRepresentation = JSON.stringify(component);
+        localStorage.setItem("fuckingHack", componentRepresentation);
+        
+        return false;
+    }
 }

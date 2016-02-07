@@ -1,6 +1,11 @@
 <button class="btn btn-warning" (click)="fuckOneUp()">Fuck one up!</button>
 <div *ngIf="nodes">
     <div *ngFor="#node of nodes">
-        <audio-node [node]="node"></audio-node>
+        <audio-node [node]="node"
+            [ngStyle]="{'left': node.posX +'px', 'top': node.posY + 'px'}"
+            class="audio-node"
+            draggable="true"
+            (dragstart)="handleDragStart($event, node)"
+            (dragend)="handleDragEnd($event, node)"></audio-node>
     </div>
 </div>

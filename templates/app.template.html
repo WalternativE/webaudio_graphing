@@ -1,13 +1,15 @@
-<div class="container-fluid">
+<div id="main-content" class="container-fluid">
     <div class="row">
         <h1>Just Playing...</h1>
     </div>
     <div class="row">
         <pallette (newNode)="addEmittedNodeToGraph($event)"></pallette>
     </div>
-    <hr />
-    
-    <switchboard [nodes]="nodes"></switchboard>
+    <div id="switchboard-row" class="row">
+        <switchboard [nodes]="nodes" class="col-xs-12"
+                    (dragover)="handleDragOver($event)"                    
+                    (drop)="handleDrop($event)"></switchboard>
+    </div>
 </div>
 
 <div class="dropdown clearfix" id="contextDropDown">
