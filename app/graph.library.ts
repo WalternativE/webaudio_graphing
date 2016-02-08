@@ -8,6 +8,8 @@ export class WebAudioNode {
     private _audioComponent: AudioComponent;
     private _type: Type;
 
+    onConnectedCallback: () => void;
+
     constructor(posX: number, posY: number, audioComponent: AudioComponent, type: Type) {
         this.posX = posX;
         this.posY = posY;
@@ -18,7 +20,7 @@ export class WebAudioNode {
     public get audioComponent(): AudioComponent {
         return this._audioComponent;
     }
-    
+
     public get type(): Type {
         return this._type;
     }
@@ -32,7 +34,7 @@ export class Edge {
     private _source: WebAudioNode;
     private _destination: WebAudioNode;
 
-    constructor(public edgeID:number, source?: WebAudioNode, destination?: WebAudioNode) {
+    constructor(public edgeID: number, source?: WebAudioNode, destination?: WebAudioNode) {
         this._source = source;
         this._destination = destination;
     }
@@ -52,13 +54,17 @@ export class Edge {
     public set destination(value: WebAudioNode) {
         this._destination = value;
         if (this._source) {
-            this._source.connectAudioNode(this._destination);
+            this.establishConnection();
         }
     }
-    
+
     public establishConnection() {
+        console.log(this);
         if (this._source && this._destination) {
             this._source.connectAudioNode(this._destination);
+            if (this._destination.onConnectedCallback) {
+                this._destination.onConnectedCallback();
+            }
         }
     }
 }

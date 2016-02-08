@@ -83,6 +83,10 @@ export class AudioHelper {
 
 export class AudioComponent {
     private _node: AudioNode;
+    
+    public get node(): AudioNode {
+        return this._node;
+    }
 
     constructor(node: AudioNode) {
         this._node = node;
@@ -216,5 +220,9 @@ export class AudioNodeCreator {
     // kinda breaking LSP here - if I have time to refactor I might want to change this
     createDestinationNode(): AudioComponent {
         return new AudioDestinationComponent(this._audioContext.destination);
+    }
+    
+    createAnalyzerNode(): AudioComponent {
+        return new AudioComponent(this._audioContext.createAnalyser());
     }
 }

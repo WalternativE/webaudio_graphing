@@ -11,6 +11,7 @@ import {OutputNodeComponent} from './outputnode.component';
 import {ConvolverComponent} from './convolver.component';
 import {FilterComponent} from './filter.component';
 import {GainComponent} from './gain.component';
+import {AnalyzerComponent} from './analyzer.component';
 
 @Component({
     selector: 'pallette',
@@ -45,6 +46,11 @@ export class PalletteComponent implements OnInit {
     createConvolver() {
         this.newNode.emit(new WebAudioNode(150, 150,
                             this._audioNodeCreator.createConvolverNode('irs_pipe_carpet.wav'), ConvolverComponent));
+    }
+    
+    createAnalyzer() {
+        this.newNode.emit(new WebAudioNode(200, 200,
+                            this._audioNodeCreator.createAnalyzerNode(), AnalyzerComponent));
     }
 
     ngOnInit() {
