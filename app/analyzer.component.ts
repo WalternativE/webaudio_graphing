@@ -68,39 +68,39 @@ export class AnalyzerComponent implements AudioNode, OnInit, AfterViewInit {
         var drawStreamArray = new Uint8Array(this.bufferLength);
         this.analyzer.getByteFrequencyData(drawStreamArray);
 
-        this.ctxHeartbeat.clearRect(0, 0, 400, 400);
+        this.ctxHeartbeat.clearRect(0, 0, 200, 200);
         this.ctxHeartbeat.lineWidth = 1.0;
         this.ctxHeartbeat.fillStyle = "#FFFFFF";
         this.ctxHeartbeat.strokeStyle = "#DDDDDD";
         this.ctxHeartbeat.beginPath();
-        this.ctxHeartbeat.moveTo(150 + Math.cos(0.5 * Math.PI) * (25 + (drawStreamArray[0] / 150 * 80)), 150 + Math.sin(0.5 * Math.PI) * (25 + (drawStreamArray[0] / 150 * 80)));
+        this.ctxHeartbeat.moveTo(100 + Math.cos(0.5 * Math.PI) * (30 + (drawStreamArray[0] / 100 * 28)), 100 + Math.sin(0.5 * Math.PI) * (30 + (drawStreamArray[0] / 100 * 28)));
 
         for (i = 1; i < (drawStreamArray.length / 4); i++) {
-            xc = ((150 + Math.cos((0.5 - (i / drawStreamArray.length * 4)) * Math.PI) * (25 + (drawStreamArray[i] / 150 * 80))) + (150 + Math.cos((0.5 - (i / drawStreamArray.length * 4)) * Math.PI) * (25 + (drawStreamArray[i + 1] / 150 * 80)))) / 2;
-            yc = ((150 + Math.sin((0.5 - (i / drawStreamArray.length * 4)) * Math.PI) * (25 + (drawStreamArray[i] / 150 * 80))) + (150 + Math.sin((0.5 - (i / drawStreamArray.length * 4)) * Math.PI) * (25 + (drawStreamArray[i + 1] / 150 * 80)))) / 2;
-            this.ctxHeartbeat.quadraticCurveTo((150 + Math.cos((0.5 - (i / drawStreamArray.length * 4)) * Math.PI) * (25 + (drawStreamArray[i] / 150 * 80))),
-                (150 + Math.sin((0.5 - (i / drawStreamArray.length * 4)) * Math.PI) * (25 + (drawStreamArray[i] / 150 * 80))), xc, yc);
-            this.ctxHeartbeat.fillStyle = 'rgb(' + (drawStreamArray[i] + 150) + ',' + (drawStreamArray[i] + 0) + ',' + (drawStreamArray[i] + 0) + ')';
+            xc = ((100 + Math.cos((0.5 - (i / drawStreamArray.length * 4)) * Math.PI) * (30 + (drawStreamArray[i] / 100 * 28))) + (100 + Math.cos((0.5 - (i / drawStreamArray.length * 4)) * Math.PI) * (30 + (drawStreamArray[i + 1] / 100 * 28)))) / 2;
+            yc = ((100 + Math.sin((0.5 - (i / drawStreamArray.length * 4)) * Math.PI) * (30 + (drawStreamArray[i] / 100 * 28))) + (100 + Math.sin((0.5 - (i / drawStreamArray.length * 4)) * Math.PI) * (30 + (drawStreamArray[i + 1] / 100 * 28)))) / 2;
+            this.ctxHeartbeat.quadraticCurveTo((100 + Math.cos((0.5 - (i / drawStreamArray.length * 4)) * Math.PI) * (30 + (drawStreamArray[i] / 100 * 28))),
+                (100 + Math.sin((0.5 - (i / drawStreamArray.length * 4)) * Math.PI) * (30 + (drawStreamArray[i] / 100 * 28))), xc, yc);
+            this.ctxHeartbeat.fillStyle = 'rgb(' + (drawStreamArray[i] + 100) + ',' + (drawStreamArray[i] + 0) + ',' + (drawStreamArray[i] + 0) + ')';
         }
 
-        this.ctxHeartbeat.quadraticCurveTo((150 + Math.cos((0.5 - (i / drawStreamArray.length * 4)) * Math.PI) * (25 + (drawStreamArray[i] / 150 * 80))),
-            (150 + Math.sin((0.5 - (i / drawStreamArray.length * 4)) * Math.PI) * (25 + (drawStreamArray[i] / 150 * 80))),
-            (150 + Math.cos((0.5 - (i / drawStreamArray.length * 4)) * Math.PI) * (25 + (drawStreamArray[i + 1] / 150 * 80))),
-            (150 + Math.sin((0.5 - (i / drawStreamArray.length * 4)) * Math.PI) * (25 + (drawStreamArray[i + 1] / 150 * 80))));
+        this.ctxHeartbeat.quadraticCurveTo((100 + Math.cos((0.5 - (i / drawStreamArray.length * 4)) * Math.PI) * (30 + (drawStreamArray[i] / 100 * 28))),
+            (100 + Math.sin((0.5 - (i / drawStreamArray.length * 4)) * Math.PI) * (30 + (drawStreamArray[i] / 100 * 28))),
+            (100 + Math.cos((0.5 - (i / drawStreamArray.length * 4)) * Math.PI) * (30 + (drawStreamArray[i + 1] / 100 * 28))),
+            (100 + Math.sin((0.5 - (i / drawStreamArray.length * 4)) * Math.PI) * (30 + (drawStreamArray[i + 1] / 100 * 28))));
 
-        this.ctxHeartbeat.moveTo(150 + Math.cos(0.5 * Math.PI) * (25 + (drawStreamArray[0] / 150 * 80)), 150 + Math.sin(0.5 * Math.PI) * (25 + (drawStreamArray[0] / 150 * 80)));
+        this.ctxHeartbeat.moveTo(100 + Math.cos(0.5 * Math.PI) * (30 + (drawStreamArray[0] / 100 * 28)), 100 + Math.sin(0.5 * Math.PI) * (30 + (drawStreamArray[0] / 100 * 28)));
 
         for (i = 1; i < (drawStreamArray.length / 4); i++) {
-            xc = ((150 + Math.cos((0.5 - (4 - i / drawStreamArray.length * 4)) * Math.PI) * (25 + (drawStreamArray[i] / 150 * 80))) + (150 + Math.cos((0.5 - (4 - i / drawStreamArray.length * 4)) * Math.PI) * (25 + (drawStreamArray[i + 1] / 150 * 80)))) / 2;
-            yc = ((150 + Math.sin((0.5 - (4 - i / drawStreamArray.length * 4)) * Math.PI) * (25 + (drawStreamArray[i] / 150 * 80))) + (150 + Math.sin((0.5 - (4 - i / drawStreamArray.length * 4)) * Math.PI) * (25 + (drawStreamArray[i + 1] / 150 * 80)))) / 2;
-            this.ctxHeartbeat.quadraticCurveTo((150 + Math.cos((0.5 - (4 - i / drawStreamArray.length * 4)) * Math.PI) * (25 + (drawStreamArray[i] / 150 * 80))),
-                (150 + Math.sin((0.5 - (4 - i / drawStreamArray.length * 4)) * Math.PI) * (25 + (drawStreamArray[i] / 150 * 80))), xc, yc);
+            xc = ((100 + Math.cos((0.5 - (4 - i / drawStreamArray.length * 4)) * Math.PI) * (30 + (drawStreamArray[i] / 100 * 28))) + (100 + Math.cos((0.5 - (4 - i / drawStreamArray.length * 4)) * Math.PI) * (30 + (drawStreamArray[i + 1] / 100 * 28)))) / 2;
+            yc = ((100 + Math.sin((0.5 - (4 - i / drawStreamArray.length * 4)) * Math.PI) * (30 + (drawStreamArray[i] / 100 * 28))) + (100 + Math.sin((0.5 - (4 - i / drawStreamArray.length * 4)) * Math.PI) * (30 + (drawStreamArray[i + 1] / 100 * 28)))) / 2;
+            this.ctxHeartbeat.quadraticCurveTo((100 + Math.cos((0.5 - (4 - i / drawStreamArray.length * 4)) * Math.PI) * (30 + (drawStreamArray[i] / 100 * 28))),
+                (100 + Math.sin((0.5 - (4 - i / drawStreamArray.length * 4)) * Math.PI) * (30 + (drawStreamArray[i] / 100 * 28))), xc, yc);
         }
 
-        this.ctxHeartbeat.quadraticCurveTo((150 + Math.cos((0.5 - (4 - i / drawStreamArray.length * 4)) * Math.PI) * (25 + (drawStreamArray[i] / 150 * 80))),
-            (150 + Math.sin((0.5 - (4 - i / drawStreamArray.length * 4)) * Math.PI) * (25 + (drawStreamArray[i] / 150 * 80))),
-            (150 + Math.cos((0.5 - (4 - i / drawStreamArray.length * 4)) * Math.PI) * (25 + (drawStreamArray[i + 1] / 150 * 80))),
-            (150 + Math.sin((0.5 - (4 - i / drawStreamArray.length * 4)) * Math.PI) * (25 + (drawStreamArray[i + 1] / 150 * 80))));
+        this.ctxHeartbeat.quadraticCurveTo((100 + Math.cos((0.5 - (4 - i / drawStreamArray.length * 4)) * Math.PI) * (30 + (drawStreamArray[i] / 100 * 28))),
+            (100 + Math.sin((0.5 - (4 - i / drawStreamArray.length * 4)) * Math.PI) * (30 + (drawStreamArray[i] / 100 * 28))),
+            (100 + Math.cos((0.5 - (4 - i / drawStreamArray.length * 4)) * Math.PI) * (30 + (drawStreamArray[i + 1] / 100 * 28))),
+            (100 + Math.sin((0.5 - (4 - i / drawStreamArray.length * 4)) * Math.PI) * (30 + (drawStreamArray[i + 1] / 100 * 28))));
 
         this.ctxHeartbeat.fill();
         this.ctxHeartbeat.stroke();
