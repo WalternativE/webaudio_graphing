@@ -1,4 +1,8 @@
 <form *ngIf="webAudioNode">
     <h4>Gain Node</h4>
+    <div class="form-group">
+        <label for="Gain">Gain</label>
+        <input class="form-control" [(ngModel)]="audioNode.gain.value" type="number" />
+    </div>
     <div class="circle" (click)="callback()"></div>
 </form>

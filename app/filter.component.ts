@@ -12,13 +12,19 @@ import {AudioNode} from './audionode.component';
 export class FilterComponent implements AudioNode{
     
     webAudioNode: WebAudioNode;
-    callback: (node: WebAudioNode) => void;    
+    callback: (node: WebAudioNode) => void;
+    
+    audioNode: BiquadFilterNode;
+    
+    types = ['lowpass', 'highpass', 'bandpass', 'lowshelf', 'highshelf', 'peaking', 'notch', 'allpass'];
     
     setNode(webAudioNode: WebAudioNode) {
         this.webAudioNode = webAudioNode;
+        
+        this.audioNode = <BiquadFilterNode>webAudioNode.audioComponent.node;
     }
     
     setNodeClickedCallback(callback) {
         this.callback = callback;
-    } 
+    }
 }

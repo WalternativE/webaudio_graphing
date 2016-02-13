@@ -12,10 +12,14 @@ import {AudioNode} from './audionode.component';
 export class GainComponent implements AudioNode{
     
     webAudioNode: WebAudioNode;
-    callback: (node: WebAudioNode) => void;    
+    callback: (node: WebAudioNode) => void;
+    
+    audioNode: GainNode;  
     
     setNode(webAudioNode: WebAudioNode) {
         this.webAudioNode = webAudioNode;
+        
+        this.audioNode = <GainNode>webAudioNode.audioComponent.node;
     }
     
     setNodeClickedCallback(callback) {
