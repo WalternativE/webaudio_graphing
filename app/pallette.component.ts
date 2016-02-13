@@ -26,7 +26,7 @@ export class PalletteComponent implements OnInit {
 
     createFileInput() {
         this.newNode.emit(new WebAudioNode(100, 100,
-            this._audioNodeCreator.createSoundNodeFromFileURL("finnish_metal.mp3", 1), InputNodeComponent));
+            this._audioNodeCreator.createSoundNodeFromFileURL("space_odd.m4a", 1), InputNodeComponent));
     }
 
     createMiceInput() {

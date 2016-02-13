@@ -32,6 +32,8 @@ interface Navigator {
 export class AudioHelper {
 
     private static _audioHelper: AudioHelper = new AudioHelper();
+    private _audioContext: AudioContext;
+    
     private _navigator: Navigator;
 
     constructor() {
@@ -62,18 +64,24 @@ export class AudioHelper {
     }
 
     public retrieveAudioContext(): AudioContext {
-        if (typeof AudioContext !== "undefined") {
-            return new AudioContext();
-        }
-        else if (typeof webkitAudioContext !== "undefined") {
-            return new webkitAudioContext();
-        }
-        else if (typeof mozAudioContext !== "undefined") {
-            return new mozAudioContext();
-        }
-        else {
-            throw new Error("AudioContext not supported");
-        }
+        if (this._audioContext) {
+            return this._audioContext;
+        } else {
+            if (typeof AudioContext !== "undefined") {
+                this._audioContext = new AudioContext();
+            }
+            else if (typeof webkitAudioContext !== "undefined") {
+                this._audioContext = new webkitAudioContext();
+            }
+            else if (typeof mozAudioContext !== "undefined") {
+                this._audioContext = new mozAudioContext();
+            }
+            else {
+                throw new Error("AudioContext not supported");
+            }
+            
+            return this._audioContext;
+        }     
     }
 
     public get navigator(): Navigator {
@@ -120,7 +128,7 @@ export class AudioNodeCreator {
         this._audioContext = audioContext;
     }
 
-    private requestDecodedSoundFile(fileURL: string, callback: (buffer: AudioBuffer) => void) {
+    requestDecodedSoundFile(fileURL: string, callback: (buffer: AudioBuffer) => void) {
 
         var getSound: XMLHttpRequest = new XMLHttpRequest();
         getSound.open("GET", fileURL, true);
@@ -145,6 +153,11 @@ export class AudioNodeCreator {
         playSound.start(this._audioContext.currentTime);
 
         return new AudioComponent(playSound);
+    }
+    
+    // small hack as i really don't want to give the audio Context away freely but I need the current Time outside
+    retrieveAudioContextCurrentTime() {
+        return this._audioContext.currentTime;
     }
 
     private retrieveUserMicStream() {

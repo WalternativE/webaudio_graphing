@@ -1,4 +1,11 @@
 <form *ngIf="webAudioNode">
     <h4>Input Node</h4>
+    <div class="form-group">
+        <label for="PlayBackRate">Play Back Rate</label>
+        <input class="form-control" type="number" [(ngModel)]="audioNode.playbackRate.value" />
+    </div>
+    <div class="form-group">
+        <button class="btn btn-primary btn-sm" (click)="togglePlay()">Toggle Play</button>
+    </div>
     <div class="circle" (click)="callback()"></div>
 </form>
