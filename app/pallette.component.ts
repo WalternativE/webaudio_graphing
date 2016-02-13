@@ -12,6 +12,7 @@ import {ConvolverComponent} from './convolver.component';
 import {FilterComponent} from './filter.component';
 import {GainComponent} from './gain.component';
 import {AnalyzerComponent} from './analyzer.component';
+import {MiceInputNode} from './miceinputnode.component';
 
 @Component({
     selector: 'pallette',
@@ -23,34 +24,41 @@ export class PalletteComponent implements OnInit {
 
     @Output() newNode = new EventEmitter<WebAudioNode>();
 
-    createInput() {
+    createFileInput() {
         this.newNode.emit(new WebAudioNode(100, 100,
-                            this._audioNodeCreator.createSoundNodeFromFileURL("finnish_metal.mp3", 1), InputNodeComponent));
+            this._audioNodeCreator.createSoundNodeFromFileURL("finnish_metal.mp3", 1), InputNodeComponent));
+    }
+
+    createMiceInput() {
+        this._audioNodeCreator.createSoundNodeFromLiveStreamn().then((miceAudioComponent) => {
+            this.newNode.emit(new WebAudioNode(50, 50,
+                miceAudioComponent, MiceInputNode));
+        });
     }
 
     createOutput() {
         this.newNode.emit(new WebAudioNode(75, 75,
-                            this._audioNodeCreator.createDestinationNode(), OutputNodeComponent));
+            this._audioNodeCreator.createDestinationNode(), OutputNodeComponent));
     }
 
     createFilter() {
         this.newNode.emit(new WebAudioNode(125, 125,
-                            this._audioNodeCreator.createLowPassNode(750, 1), FilterComponent));
+            this._audioNodeCreator.createLowPassNode(750, 1), FilterComponent));
     }
 
     createGain() {
         this.newNode.emit(new WebAudioNode(175, 175,
-                            this._audioNodeCreator.createGainNode(1), GainComponent));
+            this._audioNodeCreator.createGainNode(1), GainComponent));
     }
 
     createConvolver() {
         this.newNode.emit(new WebAudioNode(150, 150,
-                            this._audioNodeCreator.createConvolverNode('irs_pipe_carpet.wav'), ConvolverComponent));
+            this._audioNodeCreator.createConvolverNode('irs_pipe_carpet.wav'), ConvolverComponent));
     }
-    
+
     createAnalyzer() {
         this.newNode.emit(new WebAudioNode(200, 200,
-                            this._audioNodeCreator.createAnalyzerNode(), AnalyzerComponent));
+            this._audioNodeCreator.createAnalyzerNode(), AnalyzerComponent));
     }
 
     ngOnInit() {

@@ -178,9 +178,13 @@ export class AudioNodeCreator {
     }
 
     createSoundNodeFromLiveStreamn() {
-        this.retrieveUserMicStream().then((mediaStreamSource) => {
-            return new AudioComponent(mediaStreamSource);
-        });       
+        var p = new Promise<AudioComponent>((resolve) => {
+            this.retrieveUserMicStream().then((mediaStreamSource) => {
+                resolve(new AudioComponent(mediaStreamSource));
+            });
+        });
+        
+        return p;
     }
 
     createConvolverNode(impulseFileURL: string): AudioComponent {
