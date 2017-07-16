@@ -1,6 +1,6 @@
-#How to use this repo
+# How to use this repo
 
-##Build tools
+## Build tools
 Make sure you have Node.js including npm installed and execute following statements in the root directory.
 
 ```
